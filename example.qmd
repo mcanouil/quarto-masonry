@@ -30,7 +30,114 @@ engine: knitr
 
 This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 
-```{markdown}
+### Without `Masonry.js` activated
+
+```{md}
+#| code-fold: true
+#| eval: false
+:::: {.grid}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::::
+```
+
+:::: {.grid}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::::
+
+
+### With `Masonry.js`activated
+
+```{md}
 #| code-fold: true
 #| eval: false
 :::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
