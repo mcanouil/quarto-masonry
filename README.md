@@ -2,7 +2,7 @@
 
 This extension provides support for [`Masonry.js`](https://masonry.desandro.com/).
 
-_**This is a work in progress repository, thus the content is highly experimental.**_
+_**Caution: This is a work in progress repository, thus the content is highly experimental.**_
 
 ## Installing
 
