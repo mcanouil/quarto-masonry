@@ -17,7 +17,7 @@ Activate `Masonry.js` in HTML/Markdown using `data-masonry='{ "itemSelector": ".
 See [`Masonry.js` options](https://masonry.desandro.com/options.html) page for details.
 
 ```markdown
-:::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
+:::: {.grid data-masonry='{ "itemSelector": ".grid-item" }'}
 ::: {.grid-item}
 :::
 ::: {.grid-item .grid-item--width2 .grid-item--height2}
