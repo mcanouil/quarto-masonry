@@ -2,6 +2,8 @@
 
 This extension provides support for [`Masonry.js`](https://masonry.desandro.com/).
 
+**This is a work in progress repository, thus the content is highly experimental.**
+
 ## Installing
 
 ```sh
