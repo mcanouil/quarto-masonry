@@ -32,7 +32,7 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 
 ### Without `Masonry.js` activated
 
-```{md}
+```{markdown}
 #| code-fold: true
 #| eval: false
 :::: {.grid}
@@ -137,7 +137,7 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 
 ### With `Masonry.js`activated
 
-```{md}
+```{markdown}
 #| code-fold: true
 #| eval: false
 :::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
