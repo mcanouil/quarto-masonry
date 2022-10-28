@@ -1,6 +1,6 @@
-# Masonry.js Extension for Quarto
+# `Masonry.js` Extension for Quarto
 
-This extension provides support for [Masonry.js](https://masonry.desandro.com/).
+This extension provides support for [`Masonry.js`](https://masonry.desandro.com/).
 
 ## Installing
 
@@ -13,6 +13,27 @@ If you're using version control, you will want to check in this directory.
 
 ## Using
 
+Activate `Masonry.js` in HTML/Markdown using `data-masonry='{ "itemSelector": ".grid-item"}'` in fenced divs with proper item selector to only rearrange a subset of elements.  
+See [`Masonry.js` options](https://masonry.desandro.com/options.html) page for details.
+
+```markdown
+:::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::::
+```
 
 ## Example
 
