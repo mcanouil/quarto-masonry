@@ -7,7 +7,7 @@ _**Caution: This is a work in progress repository, thus the content is highly ex
 ## Installing
 
 ```sh
-quarto install extension mcanouil/quarto-masonry
+quarto add mcanouil/quarto-masonry
 ```
 
 This will install the extension under the `_extensions` subdirectory.  
