@@ -41,4 +41,4 @@ See [`Masonry.js` options](https://masonry.desandro.com/options.html) page for d
 
 Here is the source code for a minimal example: [example.qmd](example.qmd).
 
-This is the output of `example.qmd` for [HTML](https://m.canouil.fr/quarto-masonry/).
+This is the output of `example.qmd` for [HTML](https://m.canouil.dev/quarto-masonry/).
