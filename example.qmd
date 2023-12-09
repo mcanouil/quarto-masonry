@@ -1,5 +1,5 @@
 ---
-title: 'Masonry.js'
+title: "Masonry.js"
 format: html
 filters:
   - masonry
@@ -35,6 +35,7 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 ```{markdown}
 #| code-fold: true
 #| eval: false
+
 :::: {.grid}
 ::: {.grid-item}
 :::

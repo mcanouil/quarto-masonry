@@ -1,0 +1,75 @@
+---
+title: "Masonry.js: Image Gallery"
+format: html
+include-in-header:
+  - text: |
+      <style>
+      .grid-item {
+        float: left;
+      }
+      .grid {
+        width: 320px;
+        background: #EEE;
+        margin: 0 auto;
+      }
+      </style>
+engine: knitr
+---
+
+## Using the extension
+
+This extension provides support for [Masonry.js](https://masonry.desandro.com/).
+
+```{markdown}
+#| code-fold: true
+#| eval: false
+<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "fitWidth": true, "resize": true }'>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/jlzxJuSINsw" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/ZJVXcRmaSJM" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/cVpfbLcm0Bo" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/78YxP3PP05A" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/PU1Yqe9kNpg" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/uutHQEjfx3g" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/JcIFJnZDUHQ" width="180px" />
+  </div>
+</div>
+```
+
+```{=html}
+<div class="grid" data-masonry='{ "itemSelector": ".grid-item", "fitWidth": true, "resize": true }'>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/jlzxJuSINsw" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/ZJVXcRmaSJM" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/cVpfbLcm0Bo" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/78YxP3PP05A" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/PU1Yqe9kNpg" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/uutHQEjfx3g" width="180px" />
+  </div>
+  <div class="grid-item">
+  <img src="https://source.unsplash.com/JcIFJnZDUHQ" width="180px" />
+  </div>
+</div>
+```
