@@ -23,7 +23,7 @@ include-in-header:
         .grid-item--height3 { height: 260px; }
         .grid-item--height4 { height: 360px; }
       </style>
-engine: knitr
+engine: markdown
 ---
 
 ## Using the extension
@@ -32,10 +32,7 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 
 ### Without `Masonry.js` activated
 
-```{markdown}
-#| code-fold: true
-#| eval: false
-
+```{.markdown}
 :::: {.grid}
 ::: {.grid-item}
 :::
