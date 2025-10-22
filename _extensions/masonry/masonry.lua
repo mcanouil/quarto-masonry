@@ -22,7 +22,13 @@
 # SOFTWARE.
 ]]
 
-function Meta(m)
+--- Process document metadata to add Masonry.js HTML dependencies.
+--- Adds the Masonry layout library for HTML-based outputs to enable
+--- masonry-style grid layouts in the document.
+---
+--- @param _m table Document metadata (unused)
+--- @return nil
+function Meta(_m)
   if quarto.doc.is_format("html:js") then
     quarto.doc.add_html_dependency({
       name = 'masonry',
