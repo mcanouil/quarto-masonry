@@ -9,10 +9,10 @@
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -28,13 +28,14 @@
 ---
 --- @param _m table Document metadata (unused)
 --- @return nil
-function Meta(_m)
+local function Meta(_m)
   if quarto.doc.is_format("html:js") then
     quarto.doc.add_html_dependency({
       name = 'masonry',
       version = '4.2.2',
-      scripts = {"masonry.pkgd.min.js"}
+      scripts = { "masonry.pkgd.min.js" }
     })
+    -- Alternative: Auto-initialise Masonry in header (currently disabled to allow manual initialisation)
     -- quarto.doc.include_text("in-header", "<script>var msnry = new Masonry('.grid', {itemSelector: {'.grid-item', '.quarto-grid-item'}, columnWidth: 200});</script>")
   end
 end
