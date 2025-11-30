@@ -39,3 +39,7 @@ local function Meta(_m)
     -- quarto.doc.include_text('in-header', '<script>var msnry = new Masonry(\'.grid\', {itemSelector: {\'.grid-item\', \'.quarto-grid-item\'}, columnWidth: 200});</script>')
   end
 end
+
+return {
+  { Meta = Meta }
+}

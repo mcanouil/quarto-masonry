@@ -9,6 +9,7 @@ format:
   html:
     output-file: index
     toc: true
+    embed-resources: true
 filters:
   - masonry
 include-in-header: 
@@ -31,7 +32,6 @@ include-in-header:
         .grid-item--height3 { height: 260px; }
         .grid-item--height4 { height: 360px; }
       </style>
-engine: markdown
 ---
 
 ## Using the extension
@@ -39,6 +39,11 @@ engine: markdown
 This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 
 ### Without `Masonry.js` activated
+
+```{=html}
+<details>
+<summary>Click to see the Markdown code!</summary>
+```
 
 ```{.markdown}
 :::: {.grid}
@@ -89,6 +94,10 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 ::: {.grid-item .grid-item--height2}
 :::
 ::::
+```
+
+```{=html}
+</details>
 ```
 
 :::: {.grid}
@@ -143,9 +152,12 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 
 ### With `Masonry.js`activated
 
-```{markdown}
-#| code-fold: true
-#| eval: false
+```{=html}
+<details>
+<summary>Click to see the Markdown code!</summary>
+```
+
+```{.markdown}
 :::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
 ::: {.grid-item}
 :::
@@ -194,6 +206,10 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 ::: {.grid-item .grid-item--height2}
 :::
 ::::
+```
+
+```{=html}
+</details>
 ```
 
 :::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
