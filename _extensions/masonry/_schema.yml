@@ -1,0 +1,3 @@
+# _schema.yml for "masonry" filter extension
+# This extension injects the Masonry.js layout library with no user-configurable options.
+options: {}
