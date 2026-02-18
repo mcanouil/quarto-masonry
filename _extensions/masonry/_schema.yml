@@ -1,3 +1,6 @@
 # _schema.yml for "masonry" filter extension
 # This extension injects the Masonry.js layout library with no user-configurable options.
+
+$schema: https://m.canouil.dev/quarto-wizard/assets/schema/v1/extension-schema.json
+
 options: {}
