@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.3.0 (2026-05-24)
+
 ### New Features
 
 - feat: Add friendly `masonry-*` attributes on `.grid` divs that generate the `data-masonry` JSON automatically.
