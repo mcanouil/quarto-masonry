@@ -2,7 +2,12 @@
 
 ## Unreleased
 
-No user-facing changes.
+### New Features
+
+- feat: Add friendly `masonry-*` attributes on `.grid` divs that generate the `data-masonry` JSON automatically.
+- feat: Add a document-level `masonry` metadata block providing defaults for every grid.
+- feat: Auto-initialise Masonry on every grid via a bundled `masonry-init.js`, so a manual init script is no longer required.
+- feat: Add opt-in `wait-for-images` support that defers layout until images load, bundling imagesLoaded 5.0.0.
 
 ## 0.2.0 (2026-02-21)
 

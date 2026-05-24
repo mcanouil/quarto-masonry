@@ -12,7 +12,10 @@ format:
     embed-resources: true
 filters:
   - masonry
-include-in-header: 
+masonry:
+  item-selector: ".grid-item"
+  gutter: 0
+include-in-header:
   - text: |
       <style>
         .grid-item {
@@ -37,8 +40,11 @@ include-in-header:
 ## Using the extension
 
 This extension provides support for [Masonry.js](https://masonry.desandro.com/).
+The grids below are initialised automatically; there is no manual initialisation script.
 
-### Without `Masonry.js` activated
+### With the document-level defaults
+
+A plain `.grid` is activated automatically using the document-level `masonry` defaults (`item-selector` and `gutter` here).
 
 ```{=html}
 <details>
@@ -60,38 +66,6 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 ::: {.grid-item}
 :::
 ::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
 :::
 ::::
 ```
@@ -115,6 +89,33 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 :::
 ::: {.grid-item}
 :::
+::::
+
+### With the friendly attributes
+
+The `masonry-*` attributes are converted into the `data-masonry` JSON for you, inheriting the document-level `masonry` defaults for any option they do not set.
+
+```{=html}
+<details>
+<summary>Click to see the Markdown code!</summary>
+```
+
+```{.markdown}
+:::: {.grid masonry-percent-position="true"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item .grid-item--width3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
 ::: {.grid-item .grid-item--height2}
 :::
 ::: {.grid-item .grid-item--width2 .grid-item--height3}
@@ -125,32 +126,43 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 :::
 ::: {.grid-item}
 :::
+::::
+```
+
+```{=html}
+</details>
+```
+
+:::: {.grid masonry-percent-position="true"}
+::: {.grid-item}
+:::
 ::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
 :::
 ::: {.grid-item .grid-item--height3}
 :::
 ::: {.grid-item .grid-item--height2}
 :::
+::: {.grid-item .grid-item--width3}
+:::
 ::: {.grid-item}
 :::
 ::: {.grid-item}
 :::
 ::: {.grid-item .grid-item--height2}
 :::
+::: {.grid-item .grid-item--width2 .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
 ::::
 
+### With raw `data-masonry` JSON
 
-### With `Masonry.js`activated
+Writing the options yourself as raw JSON is still supported and takes precedence over the friendly attributes and metadata defaults.
 
 ```{=html}
 <details>
@@ -173,38 +185,6 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 :::
 ::: {.grid-item}
 :::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
 ::::
 ```
 
@@ -226,37 +206,5 @@ This extension provides support for [Masonry.js](https://masonry.desandro.com/).
 ::: {.grid-item}
 :::
 ::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
 :::
 ::::

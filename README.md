@@ -16,24 +16,81 @@ If you're using version control, you will want to check in this directory.
 
 ## Usage
 
-Activate `Masonry.js` in HTML/Markdown using `data-masonry='{ "itemSelector": ".grid-item"}'` in fenced divs with proper item selector to only rearrange a subset of elements.  
-See [`Masonry.js` options](https://masonry.desandro.com/options.html) page for details.
+Add the `.grid` class to a fenced div to turn it into a masonry layout, and `.grid-item` to each child you want laid out.
+The extension bundles `Masonry.js`, initialises it automatically on every grid, so you no longer need to write an initialisation script yourself.
+
+### Friendly attributes
+
+Configure a grid with friendly `masonry-*` attributes; the extension converts them into the correct `data-masonry` JSON for you.
 
 ```markdown
-:::: {.grid data-masonry='{ "itemSelector": ".grid-item" }'}
+:::: {.grid masonry-item-selector=".grid-item" masonry-gutter="10" masonry-percent-position="true"}
 ::: {.grid-item}
 :::
 ::: {.grid-item .grid-item--width2 .grid-item--height2}
 :::
 ::: {.grid-item .grid-item--height3}
 :::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width3}
+::::
+```
+
+The supported attributes map to the matching [`Masonry.js` options](https://masonry.desandro.com/options.html).
+
+| Attribute | `Masonry.js` option | Notes |
+| --- | --- | --- |
+| `masonry-column-width` | `columnWidth` | Number of pixels or an item selector. |
+| `masonry-gutter` | `gutter` | Number of pixels or a gutter element selector. |
+| `masonry-horizontal-order` | `horizontalOrder` | `true` or `false`. |
+| `masonry-percent-position` | `percentPosition` | `true` or `false`. |
+| `masonry-transition-duration` | `transitionDuration` | CSS time, for example `0.4s`. |
+| `masonry-stagger` | `stagger` | Number of milliseconds or a CSS time. |
+| `masonry-item-selector` | `itemSelector` | Defaults to `.grid-item`. |
+
+### Document-level defaults
+
+Set defaults for every grid in the document with a `masonry` metadata block, using the same option names without the `masonry-` prefix.
+A per-grid attribute always overrides the document default for that option.
+
+```yaml
+---
+filters:
+  - masonry
+masonry:
+  item-selector: ".grid-item"
+  gutter: 10
+  percent-position: true
+---
+```
+
+### Waiting for images
+
+Set `masonry-wait-for-images="true"` on a grid (or `wait-for-images: true` in the `masonry` metadata block) to defer the layout until the images inside that grid have loaded, which prevents layout shift.
+This bundles and uses [imagesLoaded](https://imagesloaded.desandro.com/).
+
+```markdown
+:::: {.grid masonry-wait-for-images="true"}
+::: {.grid-item}
+![](image-1.jpg)
 :::
 ::: {.grid-item}
+![](image-2.jpg)
 :::
+::::
+```
+
+### Raw JSON (still supported)
+
+Writing the `Masonry.js` options yourself as raw `data-masonry` JSON remains supported and takes precedence.
+Friendly attributes and metadata defaults merge in only for keys the JSON does not set.
+See the [`Masonry.js` options](https://masonry.desandro.com/options.html) page for details.
+
+```markdown
+:::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
 ::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
 :::
 ::::
 ```
