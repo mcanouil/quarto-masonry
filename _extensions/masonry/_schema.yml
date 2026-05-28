@@ -1,5 +1,6 @@
 # _schema.yml for "masonry" filter extension
-# Describes the document-level `masonry` metadata options for IDE tooling and validation.
+# Describes the document-level `masonry` metadata options and the per-grid
+# friendly attributes for IDE tooling and validation.
 
 $schema: https://m.canouil.dev/quarto-wizard/assets/schema/v1/extension-schema.json
 
@@ -43,3 +44,41 @@ options:
         type: boolean
         default: false
         description: "Defer layout until images inside each grid have loaded, using imagesLoaded."
+      wait-for-images-timeout:
+        type: number
+        description: "Maximum time in milliseconds to wait for images before running the layout anyway. Applied per grid when `wait-for-images` is enabled."
+
+attributes:
+  masonry-column-width:
+    anyOf:
+      - type: number
+      - type: string
+    description: "Width of a column, in pixels or as an item selector (Masonry.js `columnWidth`)."
+  masonry-gutter:
+    anyOf:
+      - type: number
+      - type: string
+    description: "Horizontal space between items, in pixels or as a gutter element selector (Masonry.js `gutter`)."
+  masonry-horizontal-order:
+    type: boolean
+    description: "Lay out items to maintain horizontal left-to-right order (Masonry.js `horizontalOrder`)."
+  masonry-percent-position:
+    type: boolean
+    description: "Set item positions in percentage values rather than pixels (Masonry.js `percentPosition`)."
+  masonry-transition-duration:
+    type: string
+    description: "Duration of the layout transition (Masonry.js `transitionDuration`)."
+  masonry-stagger:
+    anyOf:
+      - type: number
+      - type: string
+    description: "Stagger between transitions of subsequent items, in milliseconds or CSS time (Masonry.js `stagger`)."
+  masonry-item-selector:
+    type: string
+    description: "Selector for which child elements are laid out (Masonry.js `itemSelector`)."
+  masonry-wait-for-images:
+    type: boolean
+    description: "Defer this grid's layout until its images have loaded (per-grid override of `masonry.wait-for-images`)."
+  masonry-wait-for-images-timeout:
+    type: number
+    description: "Maximum time in milliseconds to wait for images on this grid before running the layout anyway."

@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+## 0.4.0 (2026-05-28)
+
+### New Features
+
+- feat: Add `masonry-wait-for-images-timeout` attribute and matching metadata key with an automatic layout fallback when imagesLoaded never fires.
+
+### Bug Fixes
+
+- fix: Reset module-level state at the start of each Pandoc pass so batch renders do not leak metadata defaults, wait-for-images settings, or the imagesLoaded dependency flag between documents.
+- fix: Escape control characters (newline, tab, carriage return, and the full C0 range) in `data-masonry` JSON strings; previously a value containing a literal newline produced invalid JSON.
+
+### Enhancements
+
+- enh: Warn via `quarto.log.warning` when a numeric option (`column-width`, `gutter`, `stagger`) is negative, and when `wait-for-images-timeout` is non-numeric or negative.
+
+### Documentation
+
+- docs: Document the `data-masonry` JSON > friendly attribute > metadata default > built-in default precedence in the README.
+- docs: Add friendly `masonry-*` attributes and the new timeout option to `_schema.yml` for IDE autocompletion.
+- docs: Extend `example.qmd` to cover the precedence rules and the wait-for-images-timeout option.
+
 ## 0.3.0 (2026-05-24)
 
 ### New Features
