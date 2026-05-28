@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-## 0.4.0 (2026-05-28)
-
 ### New Features
 
 - feat: Add `masonry-wait-for-images-timeout` attribute and matching metadata key with an automatic layout fallback when imagesLoaded never fires.

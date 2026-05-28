@@ -8,7 +8,7 @@ This extension provides support for [`Masonry.js`](https://masonry.desandro.com/
 ## Installation
 
 ```sh
-quarto add mcanouil/quarto-masonry@0.4.0
+quarto add mcanouil/quarto-masonry@0.3.0
 ```
 
 This will install the extension under the `_extensions` subdirectory.  
