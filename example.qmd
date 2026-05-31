@@ -160,6 +160,41 @@ The `masonry-*` attributes are converted into the `data-masonry` JSON for you, i
 :::
 ::::
 
+### Waiting for images with a timeout
+
+The `masonry-wait-for-images-timeout` attribute caps how long the extension waits for imagesLoaded before running the layout anyway, so the grid still appears if image loading stalls.
+
+```{=html}
+<details>
+<summary>Click to see the Markdown code!</summary>
+```
+
+```{.markdown}
+:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::::
+```
+
+```{=html}
+</details>
+```
+
+:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2 .grid-item--height2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::::
+
 ### With raw `data-masonry` JSON
 
 Writing the options yourself as raw JSON is still supported and takes precedence over the friendly attributes and metadata defaults.

@@ -46,6 +46,15 @@ The supported attributes map to the matching [`Masonry.js` options](https://maso
 | `masonry-stagger` | `stagger` | Number of milliseconds or a CSS time. |
 | `masonry-item-selector` | `itemSelector` | Defaults to `.grid-item`. |
 
+#### Option precedence
+
+For each Masonry.js option, the value used at render is resolved in this order, highest priority first.
+
+1. A key explicitly set in the raw `data-masonry` JSON on the grid (never overwritten).
+2. The matching `masonry-*` attribute on the grid.
+3. The matching key in the document-level `masonry` metadata block.
+4. The extension's built-in default (currently only `itemSelector` defaults to `.grid-item`).
+
 ### Document-level defaults
 
 Set defaults for every grid in the document with a `masonry` metadata block, using the same option names without the `masonry-` prefix.
@@ -74,6 +83,18 @@ This bundles and uses [imagesLoaded](https://imagesloaded.desandro.com/).
 :::
 ::: {.grid-item}
 ![](image-2.jpg)
+:::
+::::
+```
+
+Add `masonry-wait-for-images-timeout="3000"` on a grid (or `wait-for-images-timeout: 3000` in the metadata block) to cap how long the extension waits before running the layout anyway.
+The value is in milliseconds.
+If imagesLoaded never fires, the layout still runs at the timeout instead of being silently skipped.
+
+```markdown
+:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
+::: {.grid-item}
+![](image-1.jpg)
 :::
 ::::
 ```
