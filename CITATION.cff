@@ -9,5 +9,5 @@ authors:
 repository-code: "https://github.com/mcanouil/quarto-masonry"
 url: "http://m.canouil.dev/quarto-masonry/"
 license: "MIT"
-date-released: "2026-05-24"
-version: 0.3.0
+date-released: "2026-05-31"
+version: 0.4.0
