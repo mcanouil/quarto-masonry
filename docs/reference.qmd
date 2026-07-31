@@ -1,0 +1,106 @@
+---
+title: "Reference"
+subtitle: "Every attribute the masonry extension accepts."
+description: "The complete masonry configuration: the grid classes, the friendly attributes and their Masonry.js options, document defaults, image waiting, and the precedence between them."
+---
+
+::: {.callout-caution}
+This extension is experimental, and its interface may still change.
+:::
+
+## Enabling the filter
+
+```yaml
+filters:
+  - masonry
+```
+
+## Classes
+
+| Class | Role |
+| --- | --- |
+| `.grid` | The container, laid out as a Masonry grid. |
+| `.grid-item` | A child to lay out. The selector is configurable. |
+
+: The two classes. {.striped .hover tbl-colwidths="[20,80]"}
+
+```markdown
+:::: {.grid}
+::: {.grid-item}
+:::
+::: {.grid-item}
+:::
+::::
+```
+
+::: {.callout-important}
+Masonry positions items; it does not size them.
+Widths and heights come from your own CSS, and without them every item is the same size and the cascade has nothing to cascade.
+:::
+
+## Attributes
+
+Each maps to the [Masonry.js option](https://masonry.desandro.com/options.html) of the same name.
+
+| Attribute | Masonry.js option | Value |
+| --- | --- | --- |
+| `masonry-column-width` | `columnWidth` | Pixels, or an item selector. |
+| `masonry-gutter` | `gutter` | Pixels, or a gutter element selector. |
+| `masonry-horizontal-order` | `horizontalOrder` | `true` or `false`. |
+| `masonry-percent-position` | `percentPosition` | `true` or `false`. |
+| `masonry-transition-duration` | `transitionDuration` | A CSS time, such as `0.4s`. |
+| `masonry-stagger` | `stagger` | Milliseconds, or a CSS time. |
+| `masonry-item-selector` | `itemSelector` | A selector. Defaults to `.grid-item`. |
+| `masonry-wait-for-images` | | `true` defers layout until this grid's images have loaded. |
+| `masonry-wait-for-images-timeout` | | Milliseconds to wait before laying out anyway. |
+
+: Attributes accepted on a `.grid`. {.striped .hover tbl-colwidths="[32,22,46]"}
+
+## Document defaults
+
+The same options, without the `masonry-` prefix, under a top-level `masonry` key:
+
+```yaml
+masonry:
+  item-selector: ".grid-item"
+  gutter: 10
+  percent-position: true
+  wait-for-images: true
+  wait-for-images-timeout: 3000
+```
+
+An attribute on a grid overrides the default for that grid alone.
+
+## Precedence
+
+For each option, the first of these that provides a value wins:
+
+1. A key set in raw `data-masonry` JSON on the grid, which is never overwritten.
+2. The matching `masonry-*` attribute on the grid.
+3. The matching key in the document-level `masonry` metadata.
+4. The extension's own default, which today covers `itemSelector` only.
+
+Raw JSON remains supported, and the friendly attributes merge into whatever it leaves unset:
+
+```markdown
+:::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
+::::
+```
+
+## Waiting for images
+
+A grid of images lays out before the images have dimensions, and jumps once they arrive.
+
+```markdown
+:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
+::::
+```
+
+The first attribute defers layout until [imagesLoaded](https://imagesloaded.desandro.com) reports the grid's images ready; the extension bundles that library too.
+The second caps the wait, so a request that never resolves delays the layout rather than cancelling it.
+
+## Limitations
+
+- HTML formats only. Elsewhere the divs render as ordinary content, in source order.
+- Item dimensions are yours to supply; the extension does not style anything.
+- `.grid` is also a class in Quarto's own layout system. A div carrying it is treated as a Masonry grid by this filter, so avoid the name for anything else on a page that uses the extension.

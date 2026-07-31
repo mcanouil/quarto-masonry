@@ -4,3 +4,5 @@
 /example_files
 /index.html
 /index_files
+/.quarto/
+**/*.quarto_ipynb

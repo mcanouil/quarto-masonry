@@ -1,0 +1,77 @@
+---
+title: "Masonry"
+subtitle: "Cascading grid layouts, without writing the JavaScript."
+description: "What the masonry extension is for, how to enable it, and the smallest grid that lays itself out."
+authors:
+  - name: "Mickaël CANOUIL, _Ph.D._"
+    orcid: "0000-0002-3396-4549"
+    url: "https://mickael.canouil.fr"
+---
+
+::: {.callout-caution}
+This extension is experimental, and its interface may still change.
+:::
+
+[Masonry.js](https://masonry.desandro.com) packs items of uneven height into a cascading grid, the way a stone wall fits irregular blocks.
+Using it by hand means loading the library, writing an initialiser, and encoding the options as a JSON attribute.
+
+`masonry` does all three.
+A fenced div with the `.grid` class becomes a grid, its `.grid-item` children are laid out, and the options are written as ordinary attributes.
+
+## Installation
+
+```bash
+quarto add {{< var extension.reference >}}
+```
+
+This will install the extension under the `_extensions` subdirectory.
+If you are using version control, you will want to check in this directory.
+
+Or install it from your editor with [Quarto Wizard](https://m.canouil.dev/quarto-wizard):
+
+::: {.btn-group role="group" aria-label="Quarto Wizard installer options"}
+
+[Visual Studio Code](vscode://mcanouil.quarto-wizard/install?repo={{< var extension.wizard-reference >}}){.btn .btn-outline-primary title="Install {{< var extension.reference >}} in Visual Studio Code using the Quarto Wizard extension."}
+[Positron](positron://mcanouil.quarto-wizard/install?repo={{< var extension.wizard-reference >}}){.btn .btn-outline-primary title="Install {{< var extension.reference >}} in Positron using the Quarto Wizard extension."}
+[VSCodium](vscodium://mcanouil.quarto-wizard/install?repo={{< var extension.wizard-reference >}}){.btn .btn-outline-primary title="Install {{< var extension.reference >}} in VSCodium using the Quarto Wizard extension."}
+
+:::
+
+## Quick start
+
+```yaml
+filters:
+  - masonry
+```
+
+```markdown
+:::: {.grid masonry-gutter="10"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::::
+```
+
+The library is loaded and initialised for you; no script is needed.
+
+::: {.callout-important}
+Masonry positions items but does not size them.
+The `.grid-item` children need dimensions from your own CSS, as the examples on this site do.
+:::
+
+See the [Reference](reference.qmd) for every attribute, and the [Examples](examples.qmd) for grids you can resize the window against.
+
+## Where it works
+
+HTML formats.
+Masonry is a browser library, so every other format renders the divs as ordinary content in source order.
+
+## Links
+
+- [Reference](reference.qmd) for every attribute and its precedence.
+- [Examples](examples.qmd) for working grids.
+- [Changelog](changelog.qmd) for what each release changed.
+- [Source and issues](https://github.com/mcanouil/quarto-masonry) on GitHub.

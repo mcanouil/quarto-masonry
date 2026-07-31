@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Bug Fixes
+
+- fix: Merge the friendly attributes and document defaults into a grid that already carries raw `data-masonry` JSON. The merged object was computed and then discarded whenever raw JSON was present, so `itemSelector` and every other default was silently dropped for those grids. Keys written in the raw JSON are still never overwritten.
+
+### Documentation
+
+- docs: Add a documentation website under `docs/`, built on the `atelier` project type and published to <https://m.canouil.dev/quarto-masonry/>.
+- docs: Trim `README.md` to a landing page pointing at the website, and `example.qmd` to a short starting point to copy.
+- docs: Add the Pages workflow, which renders `docs/` on pull requests and deploys it from the release tag.
+- docs: Add the Quarto Extensions Updates workflow, scanning `docs` for the website's own dependencies.
+
 ## 0.4.0 (2026-05-31)
 
 ### New Features
