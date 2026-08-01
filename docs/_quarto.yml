@@ -89,10 +89,8 @@ format:
         - assets/theme.scss
 
 filters:
-  - at: pre-quarto
-    path: code-window
-  - at: post-quarto
-    path: gitlink
+  - code-window
+  - gitlink
   - masonry
 
 extensions:
