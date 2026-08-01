@@ -66,8 +66,8 @@ See the [Reference](reference.qmd) for every attribute, and the [Examples](examp
 
 ## Where it works
 
-HTML formats.
-Masonry is a browser library, so every other format renders the divs as ordinary content in source order.
+HTML formats that run JavaScript, RevealJS among them.
+Masonry is a browser library, so EPUB and every other format renders the divs as ordinary content in source order.
 
 ## Links
 

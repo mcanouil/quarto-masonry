@@ -99,8 +99,19 @@ A grid of images lays out before the images have dimensions, and jumps once they
 The first attribute defers layout until [imagesLoaded](https://imagesloaded.desandro.com) reports the grid's images ready; the extension bundles that library too.
 The second caps the wait, so a request that never resolves delays the layout rather than cancelling it.
 
+Waiting is off unless you ask for it, and only the exact value `true` turns it on.
+A grid may therefore set `masonry-wait-for-images="false"` to opt out of a document default.
+
+## Invalid values
+
+`column-width`, `gutter`, and `stagger` are passed through as written.
+A negative number is reported as a warning and still reaches Masonry.js, so you see what you supplied rather than a silent substitution.
+
+A `wait-for-images-timeout` that is not a number, or is negative, is reported as a warning and dropped.
+The grid then waits for imagesLoaded with no cap.
+
 ## Limitations
 
-- HTML formats only. Elsewhere the divs render as ordinary content, in source order.
+- HTML formats that run JavaScript. Elsewhere the divs render as ordinary content, in source order.
 - Item dimensions are yours to supply; the extension does not style anything.
 - `.grid` is also a class in Quarto's own layout system. A div carrying it is treated as a Masonry grid by this filter, so avoid the name for anything else on a page that uses the extension.
