@@ -1,0 +1,154 @@
+---
+title: "Examples"
+subtitle: "Grids laid out by the extension."
+description: "Working Masonry grids built by the extension, with the attributes behind each and the JSON they produce."
+---
+
+::: {.callout-caution}
+This extension is experimental, and its interface may still change.
+:::
+
+Every grid below is laid out by Masonry as this page loads.
+Resize the window and they reflow.
+
+The site sets its defaults in `_quarto.yml`:
+
+```yaml
+masonry:
+  item-selector: ".grid-item"
+  gutter: 10
+  percent-position: true
+```
+
+The items are sized by this site's own stylesheet, since the extension styles nothing.
+
+## A grid
+
+```markdown
+:::: {.grid}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::::
+
+:::
+
+The items are of uneven height, and Masonry packs them rather than leaving the gaps a float layout would.
+
+## Changing the gutter
+
+`masonry-gutter` overrides the document default for one grid.
+
+```markdown
+:::: {.grid masonry-gutter="30"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-gutter="30"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::::
+
+:::
+
+## Keeping horizontal order
+
+`masonry-horizontal-order="true"` keeps items in left-to-right order rather than packing them as tightly as possible.
+
+```markdown
+:::: {.grid masonry-horizontal-order="true"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-horizontal-order="true"}
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::::
+
+:::
+
+## Raw JSON still wins
+
+A key written in `data-masonry` is never overwritten; the friendly attributes fill in only what it leaves out.
+
+```markdown
+:::: {.grid data-masonry='{ "gutter": 0 }' masonry-gutter="40"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid data-masonry='{ "gutter": 0 }' masonry-gutter="40"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::::
+
+:::
+
+The gutter is `0`, from the JSON, not `40` from the attribute.
+The document defaults still merge in around it, so the grid ends up with `{ "gutter": 0, "itemSelector": ".grid-item", "percentPosition": true }`.
+
+## Waiting for images
+
+A grid of images lays out before the images have dimensions, then jumps once they arrive.
+
+```markdown
+:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
+::: {.grid-item}
+![](image-1.jpg)
+:::
+::::
+```
+
+The timeout caps the wait, so a request that never resolves delays the layout rather than cancelling it.
+
+## Source
+
+The repository ships a short, standalone starting point you can copy: [`example.qmd`](https://github.com/mcanouil/quarto-masonry/blob/main/example.qmd).

@@ -7,7 +7,6 @@ author:
     url: "https://mickael.canouil.fr"
 format:
   html:
-    output-file: index
     toc: true
     embed-resources: true
 filters:
@@ -37,209 +36,37 @@ include-in-header:
       </style>
 ---
 
-## Using the extension
+A fenced div with the `.grid` class becomes a Masonry grid, and its `.grid-item` children are laid out.
+The library is loaded and initialised for you.
 
-This extension provides support for [Masonry.js](https://masonry.desandro.com/).
-The grids below are initialised automatically; there is no manual initialisation script.
-
-### With the document-level defaults
-
-A plain `.grid` is activated automatically using the document-level `masonry` defaults (`item-selector` and `gutter` here).
-
-```{=html}
-<details>
-<summary>Click to see the Markdown code!</summary>
-```
-
-```{.markdown}
-:::: {.grid}
+```markdown
+:::: {.grid masonry-gutter="10"}
 ::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
 :::
 ::: {.grid-item .grid-item--height2}
 :::
-::: {.grid-item .grid-item--width3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
+::: {.grid-item .grid-item--width2}
 :::
 ::::
 ```
 
-```{=html}
-</details>
-```
-
-:::: {.grid}
+:::: {.grid masonry-gutter="10"}
 ::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
 :::
 ::: {.grid-item .grid-item--height2}
 :::
-::: {.grid-item .grid-item--width3}
-:::
 ::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item .grid-item--height3}
 :::
 ::: {.grid-item}
 :::
 ::::
 
-### With the friendly attributes
+Masonry positions items but does not size them: the widths and heights above come from the stylesheet in this document's front matter.
 
-The `masonry-*` attributes are converted into the `data-masonry` JSON for you, inheriting the document-level `masonry` defaults for any option they do not set.
+Set defaults for every grid under a top-level `masonry` key, and override them per grid with `masonry-*` attributes.
 
-```{=html}
-<details>
-<summary>Click to see the Markdown code!</summary>
-```
-
-```{.markdown}
-:::: {.grid masonry-percent-position="true"}
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::::
-```
-
-```{=html}
-</details>
-```
-
-:::: {.grid masonry-percent-position="true"}
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item}
-:::
-::::
-
-### Waiting for images with a timeout
-
-The `masonry-wait-for-images-timeout` attribute caps how long the extension waits for imagesLoaded before running the layout anyway, so the grid still appears if image loading stalls.
-
-```{=html}
-<details>
-<summary>Click to see the Markdown code!</summary>
-```
-
-```{.markdown}
-:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::::
-```
-
-```{=html}
-</details>
-```
-
-:::: {.grid masonry-wait-for-images="true" masonry-wait-for-images-timeout="3000"}
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::::
-
-### With raw `data-masonry` JSON
-
-Writing the options yourself as raw JSON is still supported and takes precedence over the friendly attributes and metadata defaults.
-
-```{=html}
-<details>
-<summary>Click to see the Markdown code!</summary>
-```
-
-```{.markdown}
-:::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::::
-```
-
-```{=html}
-</details>
-```
-
-:::: {.grid data-masonry='{ "itemSelector": ".grid-item", "gutter": 0 }'}
-::: {.grid-item}
-:::
-::: {.grid-item .grid-item--width2 .grid-item--height2}
-:::
-::: {.grid-item .grid-item--height3}
-:::
-::: {.grid-item .grid-item--height2}
-:::
-::: {.grid-item .grid-item--width3}
-:::
-::: {.grid-item}
-:::
-::: {.grid-item}
-:::
-::::
+Full documentation: <https://m.canouil.dev/quarto-masonry/>.

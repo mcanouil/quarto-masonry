@@ -193,6 +193,20 @@ local function build_data_masonry(attributes, raw_json)
     return nil
   end
   table.sort(fragments)
+  --- Keys the author wrote are kept verbatim, and the merged ones are appended
+  --- to them. Returning the new fragments alone would drop the raw JSON when
+  --- the caller assigns the result.
+  if raw_json ~= nil then
+    local inner = raw_json:match('^%s*{(.*)}%s*$')
+    if inner == nil then
+      return nil
+    end
+    inner = inner:match('^%s*(.-)%s*$')
+    if inner == '' then
+      return '{ ' .. table.concat(fragments, ', ') .. ' }'
+    end
+    return '{ ' .. inner .. ', ' .. table.concat(fragments, ', ') .. ' }'
+  end
   return '{ ' .. table.concat(fragments, ', ') .. ' }'
 end
 
@@ -240,7 +254,7 @@ local function process_grid(div)
 
   local raw_json = div.attributes['data-masonry']
   local data_masonry = build_data_masonry(attributes, raw_json)
-  if raw_json == nil and data_masonry ~= nil then
+  if data_masonry ~= nil then
     div.attributes['data-masonry'] = data_masonry
   end
 

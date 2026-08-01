@@ -1,0 +1,30 @@
+/*-- scss:rules --*/
+
+// Per-repository overrides only. The palette comes from the shared pastel
+// extension, which is applied just before this file, so anything set here wins
+// the cascade.
+
+// Masonry.js lays items out but does not size them: the demonstrations on the
+// examples page need dimensions of their own, as the upstream demos do. Scoped
+// to a wrapper so nothing else on the site is affected.
+.masonry-demo {
+  .grid-item {
+    width: 150px;
+    height: 110px;
+    float: left;
+    border-radius: 0.25rem;
+    background: var(--bs-primary, #b22222);
+    border: 2px solid rgba(0, 0, 0, 0.35);
+  }
+
+  .grid-item--width2 { width: 300px; }
+  .grid-item--height2 { height: 190px; }
+  .grid-item--height3 { height: 250px; }
+
+  // The grid floats its children, so the container has to contain them.
+  .grid::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
