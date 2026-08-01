@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.4.1 (2026-08-01)
+
 ### Bug Fixes
 
 - fix: Merge the friendly attributes and document defaults into a grid that already carries raw `data-masonry` JSON. The merged object was computed and then discarded whenever raw JSON was present, so `itemSelector` and every other default was silently dropped for those grids. Keys written in the raw JSON are still never overwritten.
