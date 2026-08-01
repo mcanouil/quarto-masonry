@@ -23,6 +23,10 @@ website:
   # with a leading-slash image path, without normalising.
   site-url: &site-url https://m.canouil.dev/quarto-masonry
   repo-url: https://github.com/mcanouil/quarto-masonry
+  # The Quarto project root is docs/, so the repository links need the
+  # subdirectory the pages actually live in; without it every "Edit this page"
+  # and "Report an issue" link points at the repository root and 404s.
+  repo-subdir: docs
   page-navigation: true
   # atelier defaults search to an overlay button in the navbar. With no navbar
   # the search belongs in the sidebar, as a field rather than a button.
