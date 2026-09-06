@@ -3,7 +3,7 @@
 --- @copyright 2026 Mickaël Canouil
 --- @author Mickaël Canouil
 
-local logging = require(quarto.utils.resolve_path('_modules/logging.lua'):gsub('%.lua$', ''))
+local logging = require(quarto.utils.resolve_path('_vendor/quarto-lua-modules/logging.lua'):gsub('%.lua$', ''))
 local EXTENSION_NAME = 'masonry'
 
 --- Mapping from friendly attribute/metadata names to Masonry.js option keys.
