@@ -20,9 +20,15 @@ website:
   title: "Masonry"
   description: "A Quarto filter that lays a fenced div out as a Masonry.js cascading grid, configured with plain attributes."
   # No trailing slash: Quarto builds the social image URL by concatenating this
-  # with a leading-slash image path, without normalising.
+  # with the image path, without normalising.
   site-url: &site-url https://m.canouil.dev/quarto-masonry
   repo-url: https://github.com/mcanouil/quarto-masonry
+  open-graph:
+    image: assets/social/og-image.png
+    image-alt: "The quarto-masonry social card: the extension name and the \"filter\" badge over the line \"Create beautiful responsive grid layouts effortlessly\", beside a dark code window showing document.qmd."
+  twitter-card:
+    image: assets/social/og-image.png
+    image-alt: "The quarto-masonry social card: the extension name and the \"filter\" badge over the line \"Create beautiful responsive grid layouts effortlessly\", beside a dark code window showing document.qmd."
   # The Quarto project root is docs/, so the repository links need the
   # subdirectory the pages actually live in; without it every "Edit this page"
   # and "Report an issue" link points at the repository root and 404s.
