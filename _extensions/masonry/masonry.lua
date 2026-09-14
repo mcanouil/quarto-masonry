@@ -4,7 +4,22 @@
 --- @author Mickaël Canouil
 
 local logging = require(quarto.utils.resolve_path('_vendor/quarto-lua-modules/logging.lua'):gsub('%.lua$', ''))
+local schema = require(quarto.utils.resolve_path('_vendor/quarto-wizard/schema.lua'):gsub('%.lua$', ''))
+local check = require(quarto.utils.resolve_path('_vendor/quarto-lua-modules/schema-check.lua'):gsub('%.lua$', ''))
 local EXTENSION_NAME = 'masonry'
+
+--- The schema check, built once and reused for the whole document. It reads
+--- `_schema.yml` on the way in and checks the document configuration once.
+---
+--- The validator is injected rather than required by the check module, so the
+--- two vendored sources stay independent of where the other was placed.
+---
+--- The extension contributes a filter and no shortcode, so the check runs from
+--- the pass that reads the metadata, before the first option is read.
+---
+--- A schema that cannot be read is reported by the module as an error and the
+--- render carries on: a configuration file must not stop a document.
+local checker = check.new(schema, EXTENSION_NAME)
 
 --- Mapping from friendly attribute/metadata names to Masonry.js option keys.
 --- Keys are the friendly names (without the 'masonry-' attribute prefix);
@@ -213,23 +228,28 @@ end
 --- Read the `extensions.masonry` metadata block into the document-level
 --- defaults. An extension keeps its options at `extensions.<name>.<option>`,
 --- which is where these are read from.
+---
+--- The values come from the schema rather than from the document text. The
+--- document was read directly before, so `wait-for-images: no` turned the
+--- feature on and nothing said so. A value the schema does not accept is now
+--- named at render time.
 --- @param meta pandoc.Meta Document metadata
 --- @return nil
 local function read_metadata(meta)
-  local config = meta['extensions'] and meta['extensions'][EXTENSION_NAME]
-  if config and type(config) == 'table' then
-    for name, _ in pairs(OPTION_MAP) do
-      if config[name] ~= nil then
-        state.meta_defaults[name] = pandoc.utils.stringify(config[name])
-      end
+  checker:options(meta)
+
+  for name, _ in pairs(OPTION_MAP) do
+    local value = checker:option(name)
+    if value ~= nil then
+      state.meta_defaults[name] = tostring(value)
     end
-    if config['wait-for-images'] ~= nil then
-      state.meta_wait_for_images = pandoc.utils.stringify(config['wait-for-images']) == 'true'
-    end
-    if config['wait-for-images-timeout'] ~= nil then
-      state.meta_wait_for_images_timeout =
-        validate_timeout(pandoc.utils.stringify(config['wait-for-images-timeout']))
-    end
+  end
+
+  state.meta_wait_for_images = checker:option('wait-for-images') == true
+
+  local timeout = checker:option('wait-for-images-timeout')
+  if timeout ~= nil then
+    state.meta_wait_for_images_timeout = validate_timeout(tostring(timeout))
   end
 end
 
