@@ -5,6 +5,7 @@
 ### New Features
 
 - feat: Read the document-level defaults from `extensions.masonry` rather than from a top-level `masonry` key. An extension keeps its options at `extensions.<name>.<option>`, and the old key is removed rather than deprecated, so a document that used it must be updated. (#31)
+- feat: Check the document configuration against the schema during a render, so an unrecognised option or a value of the wrong type is reported instead of ignored. `wait-for-images: yes` turned the feature off in silence, and now says so. (#31)
 
 ### Documentation
 
