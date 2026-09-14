@@ -1,44 +1,40 @@
 # Schema for the masonry extension
-# Describes the document-level `masonry` metadata options and the per-grid
+# Describes the `extensions.masonry` metadata options and the per-grid
 # friendly attributes for IDE tooling and validation.
 
 $schema: https://m.canouil.dev/quarto-wizard/assets/schema/v2/extension-schema.json
 
 options:
-  masonry:
-    type: object
-    description: "Document-level defaults applied to every `.grid` that does not set the matching attribute."
-    properties:
-      column-width:
-        type: [number, string]
-        description: "Width of a column, in pixels or as an item selector (Masonry.js `columnWidth`)."
-      gutter:
-        type: [number, string]
-        description: "Horizontal space between items, in pixels or as a gutter element selector (Masonry.js `gutter`)."
-      horizontal-order:
-        type: boolean
-        description: "Lay out items to maintain horizontal left-to-right order (Masonry.js `horizontalOrder`)."
-      percent-position:
-        type: boolean
-        description: "Set item positions in percentage values rather than pixels (Masonry.js `percentPosition`)."
-      transition-duration:
-        type: string
-        description: "Duration of the layout transition (Masonry.js `transitionDuration`)."
-      stagger:
-        type: [number, string]
-        description: "Stagger between transitions of subsequent items, in milliseconds or CSS time (Masonry.js `stagger`)."
-      item-selector:
-        type: string
-        default: ".grid-item"
-        description: "Selector for which child elements are laid out (Masonry.js `itemSelector`)."
-      wait-for-images:
-        type: boolean
-        default: false
-        description: "Defer layout until images inside each grid have loaded, using imagesLoaded."
-      wait-for-images-timeout:
-        type: number
-        minimum: 0
-        description: "Maximum time in milliseconds to wait for images before running the layout anyway, applied per grid when `wait-for-images` is enabled."
+  column-width:
+    type: [number, string]
+    description: "Width of a column, in pixels or as an item selector (Masonry.js `columnWidth`)."
+  gutter:
+    type: [number, string]
+    description: "Horizontal space between items, in pixels or as a gutter element selector (Masonry.js `gutter`)."
+  horizontal-order:
+    type: boolean
+    description: "Lay out items to maintain horizontal left-to-right order (Masonry.js `horizontalOrder`)."
+  percent-position:
+    type: boolean
+    description: "Set item positions in percentage values rather than pixels (Masonry.js `percentPosition`)."
+  transition-duration:
+    type: string
+    description: "Duration of the layout transition (Masonry.js `transitionDuration`)."
+  stagger:
+    type: [number, string]
+    description: "Stagger between transitions of subsequent items, in milliseconds or CSS time (Masonry.js `stagger`)."
+  item-selector:
+    type: string
+    default: ".grid-item"
+    description: "Selector for which child elements are laid out (Masonry.js `itemSelector`)."
+  wait-for-images:
+    type: boolean
+    default: false
+    description: "Defer layout until images inside each grid have loaded, using imagesLoaded."
+  wait-for-images-timeout:
+    type: number
+    minimum: 0
+    description: "Maximum time in milliseconds to wait for images before running the layout anyway, applied per grid when `wait-for-images` is enabled."
 
 attributes:
   grid:

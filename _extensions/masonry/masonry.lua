@@ -210,11 +210,13 @@ local function build_data_masonry(attributes, raw_json)
   return '{ ' .. table.concat(fragments, ', ') .. ' }'
 end
 
---- Read the `masonry` metadata block into the document-level defaults.
+--- Read the `extensions.masonry` metadata block into the document-level
+--- defaults. An extension keeps its options at `extensions.<name>.<option>`,
+--- which is where these are read from.
 --- @param meta pandoc.Meta Document metadata
 --- @return nil
 local function read_metadata(meta)
-  local config = meta['masonry']
+  local config = meta['extensions'] and meta['extensions'][EXTENSION_NAME]
   if config and type(config) == 'table' then
     for name, _ in pairs(OPTION_MAP) do
       if config[name] ~= nil then

@@ -100,6 +100,12 @@ filters:
   - masonry
 
 extensions:
+  # masonry reads its document-level defaults from here, matching the option
+  # names without their `masonry-` prefix.
+  masonry:
+    item-selector: ".grid-item"
+    gutter: 10
+    percent-position: true
   # Quarto keeps the `website` block out of the metadata it hands to Lua
   # filters, so the social-metadata filter cannot read `website.site-url` to
   # build `og:url` and the canonical link. The anchor above republishes the same
@@ -129,9 +135,3 @@ extensions:
     # filename derived from the language would only add noise.
     auto-filename: false
 
-# masonry reads its document-level defaults from this top-level key rather than
-# from `extensions`, matching the option names without their `masonry-` prefix.
-masonry:
-  item-selector: ".grid-item"
-  gutter: 10
-  percent-position: true
