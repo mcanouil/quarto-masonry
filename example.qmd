@@ -11,9 +11,10 @@ format:
     embed-resources: true
 filters:
   - masonry
-masonry:
-  item-selector: ".grid-item"
-  gutter: 0
+extensions:
+  masonry:
+      item-selector: ".grid-item"
+      gutter: 0
 include-in-header:
   - text: |
       <style>

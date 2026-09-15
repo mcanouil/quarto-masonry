@@ -61,12 +61,13 @@ Each maps to the [Masonry.js option](https://masonry.desandro.com/options.html) 
 The same options, without the `masonry-` prefix, under a top-level `masonry` key:
 
 ```yaml
-masonry:
-  item-selector: ".grid-item"
-  gutter: 10
-  percent-position: true
-  wait-for-images: true
-  wait-for-images-timeout: 3000
+extensions:
+  masonry:
+      item-selector: ".grid-item"
+      gutter: 10
+      percent-position: true
+      wait-for-images: true
+      wait-for-images-timeout: 3000
 ```
 
 An attribute on a grid overrides the default for that grid alone.
