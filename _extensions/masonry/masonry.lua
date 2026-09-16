@@ -4,7 +4,22 @@
 --- @author Mickaël Canouil
 
 local logging = require(quarto.utils.resolve_path('_vendor/quarto-lua-modules/logging.lua'):gsub('%.lua$', ''))
+local schema = require(quarto.utils.resolve_path('_vendor/quarto-wizard/schema.lua'):gsub('%.lua$', ''))
+local check = require(quarto.utils.resolve_path('_vendor/quarto-lua-modules/schema-check.lua'):gsub('%.lua$', ''))
 local EXTENSION_NAME = 'masonry'
+
+--- The schema check, built once and reused for the whole document. It reads
+--- `_schema.yml` on the way in and checks the document configuration once.
+---
+--- The validator is injected rather than required by the check module, so the
+--- two vendored sources stay independent of where the other was placed.
+---
+--- The extension contributes a filter and no shortcode, so the check runs from
+--- the pass that reads the metadata, before the first option is read.
+---
+--- A schema that cannot be read is reported by the module as an error and the
+--- render carries on: a configuration file must not stop a document.
+local checker = check.new(schema, EXTENSION_NAME)
 
 --- Mapping from friendly attribute/metadata names to Masonry.js option keys.
 --- Keys are the friendly names (without the 'masonry-' attribute prefix);
@@ -110,20 +125,17 @@ local function validate_numeric(name, value)
 end
 
 --- Validate the wait-for-images timeout. Returns nil when invalid so the
---- emitter falls back to the no-timeout behaviour. Emits a warning on every
---- invalid value with context.
+--- emitter falls back to the no-timeout behaviour. The schema already names
+--- a non-numeric or negative value once, at both the option and the
+--- attribute call site, so this stays silent rather than naming it again.
 --- @param raw string The raw timeout value
 --- @return number|nil The validated timeout in milliseconds
 local function validate_timeout(raw)
   local n = tonumber(raw)
   if n == nil then
-    logging.log_warning(EXTENSION_NAME,
-      "wait-for-images-timeout '" .. tostring(raw) .. "' is not a number; ignoring.")
     return nil
   end
   if n < 0 then
-    logging.log_warning(EXTENSION_NAME,
-      "wait-for-images-timeout (" .. tostring(n) .. ") is negative; ignoring.")
     return nil
   end
   return n
@@ -210,24 +222,31 @@ local function build_data_masonry(attributes, raw_json)
   return '{ ' .. table.concat(fragments, ', ') .. ' }'
 end
 
---- Read the `masonry` metadata block into the document-level defaults.
+--- Read the `extensions.masonry` metadata block into the document-level
+--- defaults. An extension keeps its options at `extensions.<name>.<option>`,
+--- which is where these are read from.
+---
+--- The values come from the schema rather than from the document text. The
+--- document was read directly before, so `wait-for-images: no` turned the
+--- feature on and nothing said so. A value the schema does not accept is now
+--- named at render time.
 --- @param meta pandoc.Meta Document metadata
 --- @return nil
 local function read_metadata(meta)
-  local config = meta['masonry']
-  if config and type(config) == 'table' then
-    for name, _ in pairs(OPTION_MAP) do
-      if config[name] ~= nil then
-        state.meta_defaults[name] = pandoc.utils.stringify(config[name])
-      end
+  checker:options(meta)
+
+  for name, _ in pairs(OPTION_MAP) do
+    local value = checker:option(name)
+    if value ~= nil then
+      state.meta_defaults[name] = tostring(value)
     end
-    if config['wait-for-images'] ~= nil then
-      state.meta_wait_for_images = pandoc.utils.stringify(config['wait-for-images']) == 'true'
-    end
-    if config['wait-for-images-timeout'] ~= nil then
-      state.meta_wait_for_images_timeout =
-        validate_timeout(pandoc.utils.stringify(config['wait-for-images-timeout']))
-    end
+  end
+
+  state.meta_wait_for_images = checker:option('wait-for-images') == true
+
+  local timeout = checker:option('wait-for-images-timeout')
+  if timeout ~= nil then
+    state.meta_wait_for_images_timeout = validate_timeout(tostring(timeout))
   end
 end
 
@@ -242,11 +261,20 @@ local function process_grid(div)
     return div
   end
 
+  --- The whole 'grid' group is resolved once, ahead of the three reads below
+  --- that each remove one of these attributes from the element, so a value
+  --- the schema rejects is named exactly one time regardless of which of the
+  --- three reads would otherwise have reached it first.
+  local resolved = checker:attributes(div.attributes, 'grid')
+
   --- @type table<string, string> Friendly attribute values keyed without prefix
   local attributes = {}
   for name, _ in pairs(OPTION_MAP) do
-    local value = div.attributes['masonry-' .. name]
+    local value = resolved['masonry-' .. name]
     if value ~= nil then
+      if type(value) == 'boolean' then
+        value = tostring(value)
+      end
       attributes[name] = value
       div.attributes['masonry-' .. name] = nil
     end
@@ -259,18 +287,28 @@ local function process_grid(div)
   end
 
   --- @type boolean Whether this grid should defer layout until images load
+  ---
+  --- A valid value resolves to a real Lua boolean, stringified back to
+  --- 'true'/'false' before the comparison below, so "TRUE"/"FaLsE" now
+  --- switch the layout the same way "true"/"false" always have, matching
+  --- what the schema already calls legal. A value the schema rejects comes
+  --- back unchanged as the original string, so it still fails the
+  --- comparison and leaves the layout off, same as before.
   local wait_for_images = state.meta_wait_for_images
-  local attr_wait = div.attributes['masonry-wait-for-images']
+  local attr_wait = resolved['masonry-wait-for-images']
   if attr_wait ~= nil then
+    if type(attr_wait) == 'boolean' then
+      attr_wait = tostring(attr_wait)
+    end
     wait_for_images = attr_wait == 'true'
     div.attributes['masonry-wait-for-images'] = nil
   end
 
   --- Resolve the per-grid timeout. Attribute wins over metadata.
   local timeout = state.meta_wait_for_images_timeout
-  local attr_timeout = div.attributes['masonry-wait-for-images-timeout']
+  local attr_timeout = resolved['masonry-wait-for-images-timeout']
   if attr_timeout ~= nil then
-    timeout = validate_timeout(attr_timeout)
+    timeout = validate_timeout(tostring(attr_timeout))
     div.attributes['masonry-wait-for-images-timeout'] = nil
   end
 

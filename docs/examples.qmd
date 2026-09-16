@@ -14,10 +14,11 @@ Resize the window and they reflow.
 The site sets its defaults in `_quarto.yml`:
 
 ```yaml
-masonry:
-  item-selector: ".grid-item"
-  gutter: 10
-  percent-position: true
+extensions:
+  masonry:
+      item-selector: ".grid-item"
+      gutter: 10
+      percent-position: true
 ```
 
 The items are sized by this site's own stylesheet, since the extension styles nothing.
