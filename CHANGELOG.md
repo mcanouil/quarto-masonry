@@ -7,6 +7,11 @@
 - feat: Read the document-level defaults from `extensions.masonry` rather than from a top-level `masonry` key. An extension keeps its options at `extensions.<name>.<option>`, and the old key is removed rather than deprecated, so a document that used it must be updated. (#31)
 - feat: Check the document configuration against the schema during a render, so an unrecognised option or a value of the wrong type is reported instead of ignored. `wait-for-images: yes` turned the feature off in silence, and now says so. (#31)
 
+### Bug Fixes
+
+- fix: Check the grid's horizontal-order, percent-position, wait-for-images and wait-for-images-timeout attributes against the schema, so a value such as a non-numeric or negative timeout is now named once instead of being silently ignored or duplicated. (#31)
+- fix: Honour a case-insensitive masonry-wait-for-images attribute, so "TRUE" now switches the layout on like "true" always has. (#31)
+
 ### Documentation
 
 - docs: Serve the extension's social card as the Open Graph image, so a shared link shows the card rather than the first image on the page. (#29)
