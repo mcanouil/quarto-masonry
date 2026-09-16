@@ -288,16 +288,18 @@ local function process_grid(div)
 
   --- @type boolean Whether this grid should defer layout until images load
   ---
-  --- Read from the raw attribute rather than `resolved`, on purpose: the
-  --- schema's boolean coercion accepts "TRUE"/"FaLsE" case-insensitively,
-  --- which would silently widen what this attribute accepts beyond the exact
-  --- lower-case "true" tested below. `resolved` above already validates the
-  --- value, so a value the schema rejects is still named once; only which
-  --- values switch the layout on is left unchanged here, pending a separate
-  --- decision on that dialect.
+  --- A valid value resolves to a real Lua boolean, stringified back to
+  --- 'true'/'false' before the comparison below, so "TRUE"/"FaLsE" now
+  --- switch the layout the same way "true"/"false" always have, matching
+  --- what the schema already calls legal. A value the schema rejects comes
+  --- back unchanged as the original string, so it still fails the
+  --- comparison and leaves the layout off, same as before.
   local wait_for_images = state.meta_wait_for_images
-  local attr_wait = div.attributes['masonry-wait-for-images']
+  local attr_wait = resolved['masonry-wait-for-images']
   if attr_wait ~= nil then
+    if type(attr_wait) == 'boolean' then
+      attr_wait = tostring(attr_wait)
+    end
     wait_for_images = attr_wait == 'true'
     div.attributes['masonry-wait-for-images'] = nil
   end
