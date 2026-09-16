@@ -125,20 +125,17 @@ local function validate_numeric(name, value)
 end
 
 --- Validate the wait-for-images timeout. Returns nil when invalid so the
---- emitter falls back to the no-timeout behaviour. Emits a warning on every
---- invalid value with context.
+--- emitter falls back to the no-timeout behaviour. The schema already names
+--- a non-numeric or negative value once, at both the option and the
+--- attribute call site, so this stays silent rather than naming it again.
 --- @param raw string The raw timeout value
 --- @return number|nil The validated timeout in milliseconds
 local function validate_timeout(raw)
   local n = tonumber(raw)
   if n == nil then
-    logging.log_warning(EXTENSION_NAME,
-      "wait-for-images-timeout '" .. tostring(raw) .. "' is not a number; ignoring.")
     return nil
   end
   if n < 0 then
-    logging.log_warning(EXTENSION_NAME,
-      "wait-for-images-timeout (" .. tostring(n) .. ") is negative; ignoring.")
     return nil
   end
   return n
@@ -264,11 +261,20 @@ local function process_grid(div)
     return div
   end
 
+  --- The whole 'grid' group is resolved once, ahead of the three reads below
+  --- that each remove one of these attributes from the element, so a value
+  --- the schema rejects is named exactly one time regardless of which of the
+  --- three reads would otherwise have reached it first.
+  local resolved = checker:attributes(div.attributes, 'grid')
+
   --- @type table<string, string> Friendly attribute values keyed without prefix
   local attributes = {}
   for name, _ in pairs(OPTION_MAP) do
-    local value = div.attributes['masonry-' .. name]
+    local value = resolved['masonry-' .. name]
     if value ~= nil then
+      if type(value) == 'boolean' then
+        value = tostring(value)
+      end
       attributes[name] = value
       div.attributes['masonry-' .. name] = nil
     end
@@ -281,6 +287,14 @@ local function process_grid(div)
   end
 
   --- @type boolean Whether this grid should defer layout until images load
+  ---
+  --- Read from the raw attribute rather than `resolved`, on purpose: the
+  --- schema's boolean coercion accepts "TRUE"/"FaLsE" case-insensitively,
+  --- which would silently widen what this attribute accepts beyond the exact
+  --- lower-case "true" tested below. `resolved` above already validates the
+  --- value, so a value the schema rejects is still named once; only which
+  --- values switch the layout on is left unchanged here, pending a separate
+  --- decision on that dialect.
   local wait_for_images = state.meta_wait_for_images
   local attr_wait = div.attributes['masonry-wait-for-images']
   if attr_wait ~= nil then
@@ -290,9 +304,9 @@ local function process_grid(div)
 
   --- Resolve the per-grid timeout. Attribute wins over metadata.
   local timeout = state.meta_wait_for_images_timeout
-  local attr_timeout = div.attributes['masonry-wait-for-images-timeout']
+  local attr_timeout = resolved['masonry-wait-for-images-timeout']
   if attr_timeout ~= nil then
-    timeout = validate_timeout(attr_timeout)
+    timeout = validate_timeout(tostring(attr_timeout))
     div.attributes['masonry-wait-for-images-timeout'] = nil
   end
 
