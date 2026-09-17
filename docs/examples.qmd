@@ -16,12 +16,13 @@ The site sets its defaults in `_quarto.yml`:
 ```yaml
 extensions:
   masonry:
-      item-selector: ".grid-item"
-      gutter: 10
-      percent-position: true
+    item-selector: ".grid-item"
+    gutter: 10
+    percent-position: true
 ```
 
 The items are sized by this site's own stylesheet, since the extension styles nothing.
+The [Reference](reference.qmd#attributes) lists every attribute, and [Precedence](reference.qmd#precedence) says which value wins.
 
 ## A grid
 
@@ -87,6 +88,42 @@ The items are of uneven height, and Masonry packs them rather than leaving the g
 
 :::
 
+## Setting the column width
+
+`masonry-column-width` sets the width of one column.
+A grid without the attribute has no column width, so Masonry measures the first item and uses that width instead.
+
+```markdown
+:::: {.grid masonry-column-width="200"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-column-width="200"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::::
+
+:::
+
+Each item here is 150 pixels wide and the column is 200 pixels.
+Masonry adds the gutter to the column, so the items sit 210 pixels apart and a gap opens beside each one.
+
+A value that is not a number is read as a CSS selector.
+Masonry looks for that selector inside the grid and measures the width of the first element it finds.
+A selector that matches nothing breaks the layout, because Masonry then uses the selector text itself as the width.
+
 ## Keeping horizontal order
 
 `masonry-horizontal-order="true"` keeps items in left-to-right order rather than packing them as tightly as possible.
@@ -110,6 +147,140 @@ The items are of uneven height, and Masonry packs them rather than leaving the g
 ::::
 
 :::
+
+## Choosing which children to lay out
+
+`masonry-item-selector` names the children Masonry lays out.
+The grid below gives every child a `.demo-card` class and lays out that class rather than the default `.grid-item`.
+The children keep `.grid-item` as well, because this site's stylesheet sizes them by that class.
+
+```markdown
+:::: {.grid masonry-item-selector=".demo-card"}
+::: {.grid-item .demo-card}
+:::
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-item-selector=".demo-card"}
+::: {.grid-item .demo-card}
+:::
+::: {.grid-item .demo-card .grid-item--height2}
+:::
+::: {.grid-item .demo-card}
+:::
+::: {.grid-item .demo-card .grid-item--height3}
+:::
+::::
+
+:::
+
+Masonry lays out each child that matches the selector, and leaves every other child where the browser put it.
+A selector that matches nothing therefore lays out nothing.
+
+## Positioning in percentages
+
+`masonry-percent-position` decides the unit Masonry writes an item's horizontal position in.
+This site turns it on for every grid, and one grid turns it off again below.
+The attribute is how a document default is overridden for a single grid.
+
+```markdown
+:::: {.grid masonry-percent-position="false"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-percent-position="false"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::::
+
+:::
+
+The grid produces `{ "gutter": 10, "itemSelector": ".grid-item", "percentPosition": false }`.
+The packing is the same as the other grids, and the inline styles are not.
+Masonry writes the horizontal position of an item in pixels here, and as a percentage of the grid width everywhere else on this page.
+Inspect an item in your browser to see which unit it carries.
+
+## Animating the reflow
+
+`masonry-transition-duration` sets how long an item takes to move to a new position.
+
+```markdown
+:::: {.grid masonry-transition-duration="1s"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-transition-duration="1s"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::::
+
+:::
+
+The first layout is instant, so nothing animates while the page loads.
+Masonry animates every later layout, and a window resize that changes the width of the grid starts one.
+Make the window narrower against the grid above, and the items take a full second to glide to their new columns.
+
+Always give this value a unit.
+The extension sends the option to Masonry as a string, so a bare `200` reaches the CSS `transition-duration` property as `200`, which is not a valid CSS time.
+Write `200ms` or `0.2s` instead.
+`0s` turns the animation off, and the items jump straight to their new positions.
+
+## Staggering the reflow
+
+`masonry-stagger` delays each item behind the one before it.
+
+```markdown
+:::: {.grid masonry-stagger="150" masonry-transition-duration="1s"}
+::::
+```
+
+::: {.masonry-demo}
+
+:::: {.grid masonry-stagger="150" masonry-transition-duration="1s"}
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--height2}
+:::
+::: {.grid-item}
+:::
+::: {.grid-item .grid-item--width2}
+:::
+::: {.grid-item .grid-item--height3}
+:::
+::: {.grid-item}
+:::
+::::
+
+:::
+
+Resize the window against the grid above.
+The first item moves at once, the second 150 milliseconds later, the third 300 milliseconds later, and so on down the grid.
+Compare it with the grid in the section before, where every item moves together.
+
+A bare number is read as milliseconds.
+A string with a unit is read as a CSS time, so `150`, `150ms` and `0.15s` all give the same delay.
 
 ## Raw JSON still wins
 
@@ -149,6 +320,25 @@ A grid of images lays out before the images have dimensions, then jumps once the
 ```
 
 The timeout caps the wait, so a request that never resolves delays the layout rather than cancelling it.
+
+## A value the extension reports
+
+`column-width`, `gutter` and `stagger` reach Masonry exactly as written, and a negative number is reported while the document renders.
+
+```markdown
+:::: {.grid masonry-gutter="-10"}
+::::
+```
+
+That grid is not rendered on this page, because its warning would appear in this site's own build.
+The render prints one line:
+
+```text
+(W) [masonry] Option 'gutter' is negative (-10); Masonry.js expects a non-negative value.
+```
+
+The grid still gets `{ "gutter": -10, "itemSelector": ".grid-item", "percentPosition": true }`, so the output shows what you supplied rather than a silent substitution.
+See [Invalid values](reference.qmd#invalid-values) for the values the extension drops instead.
 
 ## Source
 
