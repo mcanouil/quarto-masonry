@@ -117,7 +117,8 @@ A grid without the attribute has no column width, so Masonry measures the first 
 
 :::
 
-Each item here is 150 pixels wide and the column is 200 pixels.
+Most items here are 150 pixels wide and the column is 200 pixels, so each one sits in a column wider than itself.
+The one wide item is 300 pixels and spans two columns.
 Masonry adds the gutter to the column, so the items sit 210 pixels apart and a gap opens beside each one.
 
 A value that is not a number is read as a CSS selector.
