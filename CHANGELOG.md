@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.5.0 (2026-09-23)
+
 ### New Features
 
 - feat: Read the document-level defaults from `extensions.masonry` rather than from a top-level `masonry` key. An extension keeps its options at `extensions.<name>.<option>`, and the old key is removed rather than deprecated, so a document that used it must be updated. (#31)
