@@ -16,7 +16,7 @@
 ### Documentation
 
 - docs: Serve the extension's social card as the Open Graph image, so a shared link shows the card rather than the first image on the page. (#29)
-- docs: Add worked examples for the column width, the item selector, percentage positioning, the transition duration, the stagger, and the warning a negative value produces.
+- docs: Add worked examples for the column width, the item selector, percentage positioning, the transition duration, the stagger, and the warning a negative value produces. (#32)
 
 ### Refactoring
 
